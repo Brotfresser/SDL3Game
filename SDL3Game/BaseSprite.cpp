@@ -26,7 +26,8 @@ void BaseSprite::load_texture(const char* path_to_file, float w, float h) {
 
 
 void BaseSprite::draw() {
-    SDL_RenderTexture(renderer, texture, &srcrect, &dstrect);
+    if (is_active)
+        SDL_RenderTexture(renderer, texture, &srcrect, &dstrect);
 }
 
 // потом убрать на всякий
@@ -38,15 +39,21 @@ void BaseSprite::handleEvents() {
 
 }
 
-void BaseSprite::on_clicked() {
+void BaseSprite::on_mouse_clicked() {
 
 }
 
 bool BaseSprite::is_in_rect(float x, float y) {
     if (this->x <= x && x <= this->x + rect_w)
         if (this->y <= y && y <= this->y + rect_h)
-            return true;
+            return is_active && true;
     return false;
 }
 
 
+bool BaseSprite::is_collided_with_sprite(const BaseSprite& obj) {
+    return is_active && is_in_rect(obj.x, obj.y);
+        
+}
+void BaseSprite::activate() { is_active = true; }
+void BaseSprite::deactivate() { is_active = false; }

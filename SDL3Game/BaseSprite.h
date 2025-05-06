@@ -14,6 +14,8 @@ protected:
 public:
     float& x, & y;
     float& rect_w, & rect_h;
+    bool is_mouse_over = false;
+    bool is_active = true;
         
     virtual ~BaseSprite();
     virtual void load_texture(float w = 0, float h = 0) = 0;
@@ -21,7 +23,10 @@ public:
     virtual void draw();
     virtual void update();
     virtual void handleEvents();
-    virtual void on_clicked();
+    virtual void on_mouse_clicked();
     virtual bool is_in_rect(float x, float y);
+    virtual bool is_collided_with_sprite(const BaseSprite& obj);
+    void activate();
+    void deactivate();
 };
 

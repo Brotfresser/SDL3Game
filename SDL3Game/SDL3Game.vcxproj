@@ -132,19 +132,30 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Scenes\src\SceneGameStart.cpp" />
+    <ClCompile Include="Scenes\src\BaseScene.cpp" />
     <ClCompile Include="BaseSprite.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Scenes\src\SceneMainMenu.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="TextRect.cpp" />
     <ClCompile Include="timer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Scenes\headers\SceneGameStart.h" />
+    <ClInclude Include="Scenes\headers\BaseScene.h" />
     <ClInclude Include="BaseSprite.h" />
+    <ClInclude Include="global_variables.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="Scenes\headers\SceneMainMenu.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="TextRect.h" />
     <ClInclude Include="Timer.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="SDL3Game.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

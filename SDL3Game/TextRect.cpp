@@ -49,7 +49,7 @@ void TextRect::change_text_color(SDL_Color new_color) {
 }
 
 
-void TextRect::change_text_size(int new_text_size) {
+void TextRect::change_text_size(float new_text_size) {
 	text_size = new_text_size;
 	SDL_DestroyTexture(texture);
 	TTF_CloseFont(font);
