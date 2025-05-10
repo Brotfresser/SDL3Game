@@ -9,6 +9,10 @@
 
 
 namespace Global {
-	GLOBAL(int, var, 0);
+	GLOBAL(SDL_Window*, window, nullptr);
+	GLOBAL(float, MouseX, 0);
+	GLOBAL(float, MouseY, 0);
+
 	GLOBAL(Player*, player, nullptr);
+
 }

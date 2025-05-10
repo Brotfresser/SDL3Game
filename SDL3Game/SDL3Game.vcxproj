@@ -73,6 +73,9 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <IncludePath>D:\myprojects\c++\SDL3Game\libs\SDL3\include;D:\myprojects\c++\SDL3Game\libs\SDL3_ttf-3.2.0\include;D:\myprojects\c++\SDL3Game\libs\SDL3_image-3.2.0\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <IncludePath>D:\myprojects\c++\libs\SDL3\include;D:\myprojects\c++\libs\SDL3_image-3.2.0\include;D:\myprojects\c++\libs\SDL3_ttf-3.2.0\include;$(IncludePath)</IncludePath>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -125,31 +128,36 @@
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
+      <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>D:\myprojects\c++\libs\SDL3\lib\x64;D:\myprojects\c++\libs\SDL3_image-3.2.0\lib\x64;D:\myprojects\c++\libs\SDL3_ttf-3.2.0\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>SDL3.lib;SDL3_test.lib;SDL3_image.lib;SDL3_ttf.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Scenes\src\SceneGameStart.cpp" />
-    <ClCompile Include="Scenes\src\BaseScene.cpp" />
+    <ClCompile Include="global_functions.cpp" />
+    <ClCompile Include="Scenes\SceneGameStart.cpp" />
+    <ClCompile Include="Scenes\BaseScene.cpp" />
     <ClCompile Include="BaseSprite.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Player.cpp" />
-    <ClCompile Include="Scenes\src\SceneMainMenu.cpp" />
+    <ClCompile Include="Scenes\SceneMainMenu.cpp" />
+    <ClCompile Include="Scenes\SceneMainMenu_obj\UIbuttons.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="TextRect.cpp" />
     <ClCompile Include="timer.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Scenes\headers\SceneGameStart.h" />
-    <ClInclude Include="Scenes\headers\BaseScene.h" />
+    <ClInclude Include="global_functions.h" />
+    <ClInclude Include="Scenes\SceneGameStart.h" />
+    <ClInclude Include="Scenes\BaseScene.h" />
     <ClInclude Include="BaseSprite.h" />
     <ClInclude Include="global_variables.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="resource.h" />
-    <ClInclude Include="Scenes\headers\SceneMainMenu.h" />
+    <ClInclude Include="Scenes\SceneMainMenu.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="TextRect.h" />
     <ClInclude Include="Timer.h" />

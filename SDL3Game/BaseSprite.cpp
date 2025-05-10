@@ -4,9 +4,9 @@
 
 BaseSprite::BaseSprite(SDL_Renderer* renderer, const char* file, float x, float y) :
     dstrect(), srcrect(),
-    x(dstrect.x), y(dstrect.y),
-    rect_w(dstrect.w), rect_h(dstrect.h)
+    x(dstrect.x), y(dstrect.y)
 {
+    SDL_Log("init BaseSprite x: %10.1f, y: %10.1f   | %s", x, y, file);
     this->renderer = renderer;
     path_to_file = file;
     this->x = x; this->y = y;
@@ -24,9 +24,10 @@ void BaseSprite::load_texture(const char* path_to_file, float w, float h) {
     load_texture(w, h);
 }
 
-
 void BaseSprite::draw() {
-    if (is_active)
+    dstrect.w = rect_w * rect_w_k;
+    dstrect.h = rect_h * rect_h_k;
+    if (is_active) 
         SDL_RenderTexture(renderer, texture, &srcrect, &dstrect);
 }
 
@@ -52,7 +53,21 @@ bool BaseSprite::is_in_rect(float x, float y) {
 
 
 bool BaseSprite::is_collided_with_sprite(const BaseSprite& obj) {
-    return is_active && is_in_rect(obj.x, obj.y);
+    if (!is_active)
+        return false;
+
+    bool is_x_same = false;
+    for (int x = obj.x; x < obj.x + obj.rect_w; ++x)
+        if (this->x <= x && x <= this->x + this->rect_w) {
+            is_x_same = true;
+            break;
+        }
+    for (int y = obj.y; y < obj.y + obj.rect_h; ++y)
+        if (this->y <= y && y <= this->y + this->rect_h) {
+            return is_x_same;
+        }
+
+    return false;
         
 }
 void BaseSprite::activate() { is_active = true; }

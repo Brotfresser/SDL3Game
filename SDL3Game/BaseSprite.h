@@ -9,17 +9,19 @@ protected:
     const char* path_to_file;
     SDL_FRect dstrect;
     SDL_FRect srcrect;
-
+    float rect_w, rect_h;
     BaseSprite(SDL_Renderer* renderer, const char* file, float x = 0, float y = 0);
 public:
     float& x, & y;
-    float& rect_w, & rect_h;
+    // коэффицинт, постоянный множитель
+    float rect_w_k = 1, rect_h_k = 1;
     bool is_mouse_over = false;
     bool is_active = true;
         
     virtual ~BaseSprite();
     virtual void load_texture(float w = 0, float h = 0) = 0;
     virtual void load_texture(const char* path_to_file, float w = 0, float h = 0);
+    virtual void load_texture(SDL_Texture* new_texture) = 0;
     virtual void draw();
     virtual void update();
     virtual void handleEvents();

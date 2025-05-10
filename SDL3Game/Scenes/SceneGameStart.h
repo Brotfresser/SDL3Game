@@ -1,10 +1,8 @@
 #pragma once
-#include "BaseScene.h"
 #include "SceneMainMenu.h"
 
-struct SceneGameStart: BaseScene
+class SceneGameStart: public BaseScene
 {
-private:
 	SceneGameStart(const SceneGameStart&) = delete;
 	SceneGameStart& operator =(const SceneGameStart&) = delete;
 public:

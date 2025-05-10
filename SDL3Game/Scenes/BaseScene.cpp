@@ -1,4 +1,4 @@
-#include "../headers/BaseScene.h"
+#include "BaseScene.h"
 
 BaseScene* BaseScene::get_new_scene_ptr() {
 	return new_scene_ptr;

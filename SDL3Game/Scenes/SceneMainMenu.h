@@ -3,7 +3,7 @@
 #include "SceneGameStart.h"
 
 
-struct SceneMainMenu: BaseScene
+class SceneMainMenu: public BaseScene
 {
 private:
 	SceneMainMenu(const SceneMainMenu&) = delete;

@@ -1,6 +1,6 @@
 #pragma once
 #include <SDL3/SDL.h>
-#include "../../BaseSprite.h"
+#include "../BaseSprite.h"
 #include <list>
 
 enum EventType {
@@ -8,10 +8,12 @@ enum EventType {
 	SCENE_SWITCH_REQUEST
 };
 
-class BaseScene
+struct BaseScene
 {
 protected:
+	// указатель на буфер, который нужно отобразить
 	SDL_Renderer* renderer;
+	// указатель на новую сцену, на которую нужно будет переключиться
 	BaseScene* new_scene_ptr = nullptr;
 	BaseScene(const BaseScene&) = delete;
 	BaseScene& operator =(const BaseScene&) = delete;
@@ -19,7 +21,8 @@ public:
 	std::list<BaseSprite*> all_sprites;
 
 	BaseScene(SDL_Renderer* renderer);
-	virtual BaseScene* get_new_scene_ptr();
+	// main.cpp автоматически вызывает get_new_scene_ptr когда получает EventType::SCENE_SWITCH_REQUEST
+	BaseScene* get_new_scene_ptr();
 	virtual EventType event(SDL_Event* event) = 0;
 	virtual EventType draw() = 0;
 	virtual EventType update() = 0;

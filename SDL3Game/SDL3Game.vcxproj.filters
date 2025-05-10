@@ -33,13 +33,19 @@
     <ClCompile Include="BaseSprite.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="Scenes\src\SceneMainMenu.cpp">
+    <ClCompile Include="Scenes\SceneMainMenu.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="Scenes\src\BaseScene.cpp">
+    <ClCompile Include="Scenes\BaseScene.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="Scenes\src\SceneGameStart.cpp">
+    <ClCompile Include="Scenes\SceneGameStart.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="global_functions.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="Scenes\SceneMainMenu_obj\UIbuttons.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
   </ItemGroup>
@@ -62,16 +68,19 @@
     <ClInclude Include="resource.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="Scenes\headers\BaseScene.h">
+    <ClInclude Include="Scenes\BaseScene.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="global_variables.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="Scenes\headers\SceneMainMenu.h">
+    <ClInclude Include="Scenes\SceneMainMenu.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="Scenes\headers\SceneGameStart.h">
+    <ClInclude Include="Scenes\SceneGameStart.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="global_functions.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>

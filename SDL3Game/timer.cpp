@@ -1,6 +1,14 @@
 #include "Timer.h"
 #include <SDL3/SDL.h>
 
+Timer::Timer() {
+
+}
+
+Timer::Timer(double wait_time) {
+	(*this)(wait_time);
+}
+
 
 void Timer::operator () (double time_seconds) {
 	this->first_time = double(SDL_GetTicks()) / 1000;
