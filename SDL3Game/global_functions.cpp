@@ -1,18 +1,5 @@
 #include "global_functions.h"
 
-#include <cstdlib>
-
-void openWebsite(const std::string& url) {
-#ifdef _WIN32
-    std::string command = "start ";
-#elif __APPLE__
-    std::string command = "open " +;
-#else // Linux и другие Unix-системы
-    std::string command = "xdg-open ";
-#endif
-    command + url;
-    system(command.c_str());
-}
 // // получается серый экран. мб вызывать в main после SDL_RenderPresent(renderer); ?
 //SDL_Texture* Global::TakeScreenshot(SDL_Renderer* renderer) {
 //    int width = 0, height = 0;

@@ -5,5 +5,4 @@
 
 
 namespace Global {
-	void openWebsite(const std::string& url);
 }

@@ -62,7 +62,7 @@ struct UIButtonSupport : public Sprite {
 	void on_mouse_clicked() override {
 		SDL_SetTextureAlphaMod(texture, 255);
 		SDL_Log("open url");
-		Global::openWebsite("https://nlch.itch.io/sister");
+		//Global::openWebsite("https://nlch.itch.io/sister");
 	}
 };
 
