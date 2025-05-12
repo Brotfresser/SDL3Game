@@ -1,12 +1,13 @@
 #include "BaseSprite.h"
 #include <SDL3_image/SDL_image.h>
+#include "Scenes/BaseScene.h"
 
 
 BaseSprite::BaseSprite(SDL_Renderer* renderer, const char* file, float x, float y) :
     dstrect(), srcrect(),
     x(dstrect.x), y(dstrect.y)
 {
-    SDL_Log("init BaseSprite x: %10.1f, y: %10.1f   | %s", x, y, file);
+    //SDL_Log("init BaseSprite x: %10.1f, y: %10.1f   | %s", x, y, file);
     this->renderer = renderer;
     path_to_file = file;
     this->x = x; this->y = y;
@@ -31,7 +32,7 @@ void BaseSprite::draw() {
         SDL_RenderTexture(renderer, texture, &srcrect, &dstrect);
 }
 
-// потом убрать на всякий
+// ????? ?????? ?? ??????
 void BaseSprite::update() {
 
 }
@@ -43,6 +44,15 @@ void BaseSprite::handleEvents() {
 void BaseSprite::on_mouse_clicked() {
 
 }
+
+void BaseSprite::on_mouse_enter() {
+
+}
+
+void BaseSprite::on_mouse_exit() {
+
+}
+
 
 bool BaseSprite::is_in_rect(float x, float y) {
     if (this->x <= x && x <= this->x + rect_w)
@@ -72,3 +82,8 @@ bool BaseSprite::is_collided_with_sprite(const BaseSprite& obj) {
 }
 void BaseSprite::activate() { is_active = true; }
 void BaseSprite::deactivate() { is_active = false; }
+
+const char *BaseSprite::get_path_to_file() {
+    return path_to_file;
+}
+

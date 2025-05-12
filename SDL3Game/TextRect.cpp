@@ -61,10 +61,6 @@ void TextRect::change_text(std::string new_text) {
 	load_texture();
 }
 
-void update() {
-
-}
-
 
 std::string TextRect::get_text() {
 	return text;

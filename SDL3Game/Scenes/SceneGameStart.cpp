@@ -19,18 +19,17 @@ EventType SceneGameStart::event(SDL_Event* event) {
 	switch (event->key.scancode)
 	{
 	case SDL_SCANCODE_ESCAPE:
-		new_scene_ptr = new SceneMainMenu(renderer);
-		return EventType::SCENE_SWITCH_REQUEST;
+		Global::changeScene(new SceneMainMenu(renderer));
 	default:
 		break;
 	}
-	return EventType::EVENT_NONE;
+	return Global::event;
 }
 
 EventType SceneGameStart::draw() {
 	for (auto& sprite : all_sprites)
 		sprite->draw();
-	return EventType::EVENT_NONE;
+	return EventType::NONE;
 }
 
 
@@ -39,7 +38,7 @@ EventType SceneGameStart::update() {
 		sprite->update();
 	/*Global::player->rect_w *= 1.001;
 	Global::player->rect_h *= 1.001;*/
-	return EventType::EVENT_NONE;
+	return EventType::NONE;
 }
 
 SceneGameStart::~SceneGameStart() {

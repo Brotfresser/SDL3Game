@@ -53,6 +53,9 @@ Sprite::~Sprite() {
 void Sprite::load_texture(float w, float h) {
     SDL_DestroyTexture(texture);
     texture = IMG_LoadTexture(renderer, path_to_file);
+    if (texture == nullptr) {
+        SDL_Log("error loading texture: %s", SDL_GetError());
+    }
     if (w == 0 && h == 0)
         SDL_GetTextureSize(texture, &rect_w, &rect_h);
     dstrect = { x, y, rect_w, rect_h };

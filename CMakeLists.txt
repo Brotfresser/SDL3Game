@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.31)
 project(BreadEngine)
 
+
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
@@ -45,7 +46,7 @@ link_libraries(SDL3_ttf)
 #message(${SOURCES})
 file(GLOB SOURCES "SDL3Game/*.cpp")
 file(GLOB SCENESOURCES "SDL3Game/Scenes/*.cpp")
-add_executable(BreadEngine WIN32 SDL3Game/main.cpp
+add_executable(BreadEngine SDL3Game/main.cpp
         ${SOURCES}
         ${SCENESOURCES}
 )
