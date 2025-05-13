@@ -40,8 +40,3 @@ EventType SceneGameStart::update() {
 	Global::player->rect_h *= 1.001;*/
 	return EventType::NONE;
 }
-
-SceneGameStart::~SceneGameStart() {
-	for (auto& sprite : all_sprites)
-		delete sprite;
-}

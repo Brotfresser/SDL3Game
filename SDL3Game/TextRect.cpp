@@ -1,13 +1,13 @@
 ﻿#include "TextRect.h"
 
 
-TextRect::TextRect(SDL_Renderer* renderer, std::string text, float x, float y, SDL_Color text_color, float text_size, const char* file)
+TextRect::TextRect(SDL_Renderer* renderer, std::string text, float x, float y, SDL_Color text_color, float text_size, const char* file, int text_len)
 	: BaseSprite(renderer, file, x, y)
 {
 	this->text = text;
 	this->text_color = text_color;
 	this->text_size = text_size;
-	load_texture();
+	load_texture(text_len);
 }
 
 TextRect::~TextRect() {
@@ -17,19 +17,28 @@ TextRect::~TextRect() {
 
 
 void TextRect::load_texture(float w, float h) {
-	w = h = 0;  // не нужны
+	int text_len = (int)w;
+	if (w == 0)
+		text_len = text.size();
+	h = 0;  // не нужны
 	if (texture != nullptr)
 		SDL_DestroyTexture(texture);
 	if (font != nullptr)
 		TTF_CloseFont(font);
 
 	this->font = TTF_OpenFont(path_to_file, text_size);
+	if (this->font == nullptr)
+		SDL_Log("error loading font: %s", SDL_GetError());
 
 	SDL_Surface* text_surface = TTF_RenderText_Solid(font, text.c_str(), text.size(), text_color);
+	if (text_surface == nullptr)
+		SDL_Log("error SDL_Surface text: %s", SDL_GetError());
 	this->texture = SDL_CreateTextureFromSurface(renderer, text_surface);
+	if (this->texture == nullptr)
+		SDL_Log("error creating from SDL_Surface text: %s", SDL_GetError());
 	SDL_DestroySurface(text_surface);
 	SDL_GetTextureSize(texture, &rect_w, &rect_h);
-	srcrect.w = rect_w; srcrect.h = rect_h;
+	dstrect.w = rect_w; dstrect.h = rect_h;
 }
 
 

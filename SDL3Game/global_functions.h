@@ -11,5 +11,6 @@
 namespace Global {
     void openWebsite(std::string url);
     void changeScene(BaseScene* scene);
+    void CloseGame();
 }
 #endif //GLOBAL_FUNCTIONS_H

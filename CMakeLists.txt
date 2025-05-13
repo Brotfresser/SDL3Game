@@ -1,6 +1,5 @@
-cmake_minimum_required(VERSION 3.31)
+cmake_minimum_required(VERSION 4.0)
 project(BreadEngine)
-
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -42,14 +41,23 @@ set_target_properties(SDL3_ttf PROPERTIES
 link_libraries(SDL3_ttf)
 
 
-#add_subdirectory(SDL3Game)
-#message(${SOURCES})
 file(GLOB SOURCES "SDL3Game/*.cpp")
 file(GLOB SCENESOURCES "SDL3Game/Scenes/*.cpp")
 add_executable(BreadEngine SDL3Game/main.cpp
         ${SOURCES}
         ${SCENESOURCES}
 )
+
+include_directories("${CMAKE_SOURCE_DIR}/libs/json")
+
+
+# for static linking
+if(MINGW)
+    set(CMAKE_EXE_LINKER_FLAGS "-static -static-libgcc -static-libstdc++")
+endif()
+if(WIN32)
+    target_link_libraries(BreadEngine PRIVATE kernel32 user32 gdi32)
+endif()
 
 
 # добавляем dll в папку с exe, если на винде
@@ -66,4 +74,9 @@ if (WIN32)
                 "$<TARGET_FILE_DIR:BreadEngine>"
         )
     endforeach()
+
 endif ()
+
+add_custom_command(TARGET BreadEngine PRE_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_directory
+        ${CMAKE_SOURCE_DIR}/SDL3Game/assets $<TARGET_FILE_DIR:BreadEngine>/assets)

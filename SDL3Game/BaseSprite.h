@@ -27,10 +27,10 @@ public:
     virtual ~BaseSprite();
     virtual void load_texture(float w = 0, float h = 0) = 0;
     virtual void load_texture(const char* path_to_file, float w = 0, float h = 0);
-    virtual void load_texture(SDL_Texture* new_texture) = 0;
+    virtual void load_texture(SDL_Texture* new_texture);
     virtual void draw();
     virtual void update();
-    virtual void handleEvents();
+    virtual void handleEvents(SDL_Event* event);
     virtual void on_mouse_clicked();
     virtual void on_mouse_enter();
     virtual void on_mouse_exit();
@@ -40,5 +40,6 @@ public:
     void deactivate();
 
     const char* get_path_to_file();
+    SDL_Texture* get_texture();
 };
 

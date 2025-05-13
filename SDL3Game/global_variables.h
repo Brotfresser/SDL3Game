@@ -14,7 +14,7 @@ namespace Global {
 	GLOBAL(float, MouseY, 0);
 
 	GLOBAL(EventType, event, EventType::NONE);
-	// указатель на новую сцену, на которую нужно будет переключиться
+	// СѓРєР°Р·Р°С‚РµР»СЊ РЅР° РЅРѕРІСѓСЋ СЃС†РµРЅСѓ, РЅР° РєРѕС‚РѕСЂСѓСЋ РёРіСЂР° СЃРјРµРЅРёС‚СЃСЏ РІ main.cpp
 	GLOBAL(BaseScene*, new_scene_ptr, nullptr);
 	GLOBAL(Player*, player, nullptr);
 

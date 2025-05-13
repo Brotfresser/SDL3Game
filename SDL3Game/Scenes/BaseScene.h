@@ -2,6 +2,7 @@
 #include <SDL3/SDL.h>
 #include <list>
 #include "../BaseSprite.h"
+#include "UIMenuButtons.h"
 
 
 struct BaseScene
@@ -13,12 +14,13 @@ protected:
 	BaseScene(const BaseScene&) = delete;
 	BaseScene& operator =(const BaseScene&) = delete;
 public:
-	std::list<BaseSprite*> all_sprites;
+	all_sprites_container all_sprites;
 
 	BaseScene(SDL_Renderer* renderer);
 	virtual EventType event(SDL_Event* event) = 0;
-	virtual EventType draw() = 0;
+	virtual EventType draw();
 	virtual EventType update() = 0;
-	virtual ~BaseScene() = 0;
+	// автоматически delete all_sprites
+	virtual ~BaseScene();
 };
 

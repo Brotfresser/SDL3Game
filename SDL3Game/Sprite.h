@@ -32,6 +32,5 @@ public:
 	Sprite(SDL_Renderer* renderer, const char* file, float w = 0, float h = 0, float x = 0, float y = 0);
     ~Sprite() override;
 	void load_texture(float w = 0, float h = 0) override;
-	void load_texture(SDL_Texture* new_texture) override;
 };
 

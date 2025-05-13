@@ -10,6 +10,5 @@ public:
 	EventType event(SDL_Event* event) override;
 	EventType draw() override;
 	EventType update() override;
-	~SceneGameStart() override;
 };
 

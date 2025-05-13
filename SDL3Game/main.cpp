@@ -7,7 +7,8 @@
 #include "Sprite.h"
 #define __MAIN_GLOBAL_DEFINITION__
 #include <iostream>
-
+#include "global_options.h"
+#include "save_and_load.h"
 #include "global_variables.h"
 
 const char* GameTitle = "A Simple Life with My Unobtrusive Sister on BreadEngine";
@@ -23,10 +24,14 @@ int IterateDelay = 1000 / 60;
 
 SDL_AppResult SDL_AppInit(void** appstate, int argc, char* argv[])
 {
+    load_options();
     setlocale(LC_ALL, "Russian");
     SDL_Init(SDL_INIT_VIDEO);
     TTF_Init();
     SDL_CreateWindowAndRenderer(GameTitle, WindowX, WindowY, SDL_WINDOW_RESIZABLE, &window, &renderer);
+    if (GameOptions::Fullscreen)
+        SDL_SetWindowFullscreen(window, true);
+
     SDL_SetRenderLogicalPresentation(renderer, 1920, 1080, SDL_LOGICAL_PRESENTATION_LETTERBOX);
     SDL_Event window_resize;
     window_resize.type = SDL_EVENT_WINDOW_RESIZED;
@@ -109,6 +114,7 @@ SDL_AppResult SDL_AppIterate(void* appstate)
 
 void SDL_AppQuit(void* appstate, SDL_AppResult result)
 {
+    save_options();
     TTF_Quit();
     SDL_Quit();
 }

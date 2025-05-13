@@ -1,0 +1,33 @@
+#pragma once
+#include "BaseScene.h"
+
+class SceneExample: public BaseScene
+{
+public:
+    SceneExample(SDL_Renderer* renderer)
+        :BaseScene(renderer)
+    {
+
+    }
+
+    EventType event(SDL_Event* event) override {
+        switch (event->type) {
+            case SDL_EVENT_KEY_DOWN:
+                switch (event->key.scancode) {
+                case SDL_SCANCODE_ESCAPE:
+                        break;
+                }
+                break;
+        }
+        return Global::event;
+    }
+    EventType draw() override {
+
+    }
+    EventType update() override {
+
+    }
+    ~SceneExample() override {
+
+    }
+};

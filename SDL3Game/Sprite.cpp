@@ -61,9 +61,3 @@ void Sprite::load_texture(float w, float h) {
     dstrect = { x, y, rect_w, rect_h };
     srcrect = { 0, 0, rect_w, rect_h };
 }
-
-void Sprite::load_texture(SDL_Texture* new_texture) {
-    SDL_DestroyTexture(texture);
-    texture = new_texture;
-    SDL_GetTextureSize(texture, &rect_w, &rect_h);
-}

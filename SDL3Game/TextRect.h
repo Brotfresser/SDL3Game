@@ -11,15 +11,15 @@
 class TextRect: public BaseSprite
 {
 protected:
-	TTF_Font* font;
+	TTF_Font* font = nullptr;
 	std::string text;
 	SDL_Color text_color;
 	float text_size;
 
 public:
-	TextRect(SDL_Renderer* renderer, std::string text = "Sample text", float x = 0, float y = 0, 
+	TextRect(SDL_Renderer* renderer, std::string text = "Sample text", float x = 200, float y = 200,
 		SDL_Color text_color = SDL_TEXT_COLOR_WHITE,
-		float text_size = 16, const char* file = "assets/fonts/PixelifySans-Regular.ttf");
+		float text_size = 16, const char* file = "assets/fonts/PixelifySans-Regular.ttf", int text_len = 0);
 
 	~TextRect() override;
 	void load_texture(float w = 0, float h = 0) override;

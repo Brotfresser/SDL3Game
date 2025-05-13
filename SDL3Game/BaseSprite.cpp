@@ -25,6 +25,12 @@ void BaseSprite::load_texture(const char* path_to_file, float w, float h) {
     load_texture(w, h);
 }
 
+void BaseSprite::load_texture(SDL_Texture* new_texture) {
+    SDL_DestroyTexture(texture);
+    texture = new_texture;
+    SDL_GetTextureSize(texture, &rect_w, &rect_h);
+}
+
 void BaseSprite::draw() {
     dstrect.w = rect_w * rect_w_k;
     dstrect.h = rect_h * rect_h_k;
@@ -37,7 +43,7 @@ void BaseSprite::update() {
 
 }
 
-void BaseSprite::handleEvents() {
+void BaseSprite::handleEvents(SDL_Event* event) {
 
 }
 
@@ -87,3 +93,6 @@ const char *BaseSprite::get_path_to_file() {
     return path_to_file;
 }
 
+SDL_Texture* BaseSprite::get_texture() {
+    return texture;
+}

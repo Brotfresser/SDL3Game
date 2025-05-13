@@ -14,8 +14,11 @@ namespace Global {
         system(command.c_str());
     }
 
-        void changeScene(BaseScene *scene) {
-            Global::new_scene_ptr = scene;
-            Global::event = EventType::SCENE_SWITCH_REQUEST;
-        }
+    void changeScene(BaseScene *scene) {
+        Global::new_scene_ptr = scene;
+        Global::event = EventType::SCENE_SWITCH_REQUEST;
+    }
+    void CloseGame() {
+        Global::event = EventType::GAME_CLOSE;
+    }
 }
