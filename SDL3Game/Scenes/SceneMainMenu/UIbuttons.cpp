@@ -1,91 +1,103 @@
 #include <SDL3/SDL.h>
-#include "../../Sprite.h"
+#include <Sprites/Sprite.h>
 #include <string>
-//#include "../../global_variables.h"
-#include "../../global_functions.h"
-#include "../SceneGameStart.h"
-#include "SceneOptions.cpp"
+#include <global_functions.h>
+#include <SwitchSceneFabric.h>
 
 
-struct UIButtonNew : Sprite {
-    friend SceneMainMenu;
+constexpr float start_button_x = 1920.0 * 80/100;
+constexpr int new_button_x = start_button_x - 30;
+constexpr double speed_button = 83;
 
-    UIButtonNew(SDL_Renderer *renderer, const char *file, float w = 0, float h = 0,
-                float x = 0, float y = 0)
+
+struct UIButtonNew final : Sprite {
+
+    explicit UIButtonNew(SDL_Renderer *renderer, const char *file = "assets/MainMenu/buttons/NEW_.png",
+        float w = 0, float h = 0,
+                float x = start_button_x, float y = 1080.0 * 63/100)
         : Sprite(renderer, file, w, h, x, y) {
         SDL_SetTextureAlphaMod(texture, 128);
     }
 
     void on_mouse_enter() override {
         SDL_SetTextureAlphaMod(texture, 255);
+        smooth_move_data.init_by_speed(new_button_x, y, speed_button);
     }
     void on_mouse_exit() override {
         SDL_SetTextureAlphaMod(texture, 128);
+        smooth_move_data.init_by_speed(start_button_x, y, speed_button);
     }
 
     void on_mouse_clicked() override {
-        SDL_Log("game new");
-        Global::changeScene(new SceneGameStart(renderer));
+        SceneFabric::SwitchScene(AllScenesID::GameStart);
     }
 };
 
 
-struct UIButtonLoad : Sprite {
-    friend SceneMainMenu;
+struct UIButtonLoadGame final : Sprite {
 
-    UIButtonLoad(SDL_Renderer *renderer, const char *file, float w = 0, float h = 0,
-                 float x = 0, float y = 0)
+    explicit UIButtonLoadGame(SDL_Renderer *renderer, const char *file = "assets/MainMenu/buttons/LOAD_.png",
+        float w = 0, float h = 0,
+                 float x = start_button_x, float y = 1080.0 * 70/100)
         : Sprite(renderer, file, w, h, x, y) {
         SDL_SetTextureAlphaMod(texture, 128);
     }
 
     void on_mouse_enter() override {
         SDL_SetTextureAlphaMod(texture, 255);
+        smooth_move_data.init_by_speed(new_button_x, y, speed_button);
     }
     void on_mouse_exit() override {
         SDL_SetTextureAlphaMod(texture, 128);
+        smooth_move_data.init_by_speed(start_button_x, y, speed_button);
     }
 
     void on_mouse_clicked() override {
-        SDL_Log("game load");
+        SceneFabric::SwitchScene(AllScenesID::LoadGame);
     }
 };
 
 
-struct UIButtonSettings : Sprite {
-    friend SceneMainMenu;
+struct UIButtonSettings final : Sprite {
 
-    UIButtonSettings(SDL_Renderer *renderer, const char *file, float w = 0, float h = 0, float x = 0, float y = 0)
+    explicit UIButtonSettings(SDL_Renderer *renderer, const char *file = "assets/MainMenu/buttons/SETTING_.png",
+        float w = 0, float h = 0,
+        float x = start_button_x, float y = 1080.0 * 77/100)
         : Sprite(renderer, file, w, h, x, y) {
         SDL_SetTextureAlphaMod(texture, 128);
     }
 
     void on_mouse_enter() override {
         SDL_SetTextureAlphaMod(texture, 255);
+        smooth_move_data.init_by_speed(new_button_x, y, speed_button);
     }
     void on_mouse_exit() override {
         SDL_SetTextureAlphaMod(texture, 128);
+        smooth_move_data.init_by_speed(start_button_x, y, speed_button);
     }
 
     void on_mouse_clicked() override {
-        Global::changeScene(new SceneOptions(renderer));
+        SceneFabric::SwitchScene(AllScenesID::Options);
     }
 };
 
 
-struct UIButtonSupport : public Sprite {
-    friend SceneMainMenu;
+struct UIButtonSupport final : Sprite {
 
-    UIButtonSupport(SDL_Renderer *renderer, const char *file, float w = 0, float h = 0, float x = 0, float y = 0)
+    explicit UIButtonSupport(SDL_Renderer *renderer, const char *file = "assets/MainMenu/buttons/SUPPORT_.png",
+        float w = 0, float h = 0,
+        float x = start_button_x, float y = 1080.0 * 84/100)
         : Sprite(renderer, file, w, h, x, y) {
         SDL_SetTextureAlphaMod(texture, 128);
     }
 
     void on_mouse_enter() override {
         SDL_SetTextureAlphaMod(texture, 255);
+        smooth_move_data.init_by_speed(new_button_x, y, speed_button);
     }
     void on_mouse_exit() override {
         SDL_SetTextureAlphaMod(texture, 128);
+        smooth_move_data.init_by_speed(start_button_x, y, speed_button);
     }
 
     void on_mouse_clicked() override {
@@ -94,19 +106,22 @@ struct UIButtonSupport : public Sprite {
 };
 
 
-struct UIButtonExit : Sprite {
-    friend SceneMainMenu;
+struct UIButtonExit final : Sprite {
 
-    UIButtonExit(SDL_Renderer *renderer, const char *file, float w = 0, float h = 0, float x = 0, float y = 0)
+    explicit UIButtonExit(SDL_Renderer *renderer, const char *file = "assets/MainMenu/buttons/EXIT_.png",
+        float w = 0, float h = 0,
+        float x = start_button_x, float y = 1080.0 * 91/100)
         : Sprite(renderer, file, w, h, x, y) {
         SDL_SetTextureAlphaMod(texture, 128);
     }
 
     void on_mouse_enter() override {
         SDL_SetTextureAlphaMod(texture, 255);
+        smooth_move_data.init_by_speed(new_button_x, y, speed_button);
     }
     void on_mouse_exit() override {
         SDL_SetTextureAlphaMod(texture, 128);
+        smooth_move_data.init_by_speed(start_button_x, y, speed_button);
     }
 
     void on_mouse_clicked() override {

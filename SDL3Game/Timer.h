@@ -4,11 +4,11 @@
 
 class Timer {
 	double wait_time = 0;
-	double first_time = SDL_GetTicks() / 1000;	
+	double first_time = static_cast<double>(SDL_GetTicksNS()) / 1'000'000'000;
 
 public:
 	Timer();
-	Timer(double wait_time);
+	explicit Timer(double wait_time);
 	void operator () (double time_seconds);
-	operator bool();
+	explicit operator bool() const;
 };

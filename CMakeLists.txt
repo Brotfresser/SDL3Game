@@ -41,14 +41,19 @@ set_target_properties(SDL3_ttf PROPERTIES
 link_libraries(SDL3_ttf)
 
 
-file(GLOB SOURCES "SDL3Game/*.cpp")
-file(GLOB SCENESOURCES "SDL3Game/Scenes/*.cpp")
-add_executable(BreadEngine SDL3Game/main.cpp
-        ${SOURCES}
-        ${SCENESOURCES}
-)
 
+file(GLOB SOURCES "SDL3Game/*.cpp")
+file(GLOB SCENE_SOURCES "SDL3Game/Scenes/*.cpp")
+file(GLOB SPRITE_SOURCES "SDL3Game/Sprites/*.cpp")
+if(CMAKE_BUILD_TYPE STREQUAL "Debug")
+    add_executable(BreadEngine SDL3Game/main.cpp ${SOURCES} ${SCENE_SOURCES} ${SPRITE_SOURCES})
+endif ()
+if(CMAKE_BUILD_TYPE STREQUAL "Release")
+    add_executable(BreadEngine WIN32 SDL3Game/main.cpp ${SOURCES} ${SCENE_SOURCES} ${SPRITE_SOURCES})
+endif ()
 include_directories("${CMAKE_SOURCE_DIR}/libs/json")
+include_directories("${CMAKE_SOURCE_DIR}/SDL3Game")
+message("${CMAKE_SOURCE_DIR}/SDL3Game")
 
 
 # for static linking

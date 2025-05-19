@@ -1,6 +1,6 @@
-#include "../../../TextRect.h"
+#include <Sprites/TextRect.h>
 #include <format>
-#include "../../../global_options.h"
+#include <global_options.h>
 
 
 // неравномерно, придется делать их как отдельные спрайты
@@ -15,7 +15,7 @@ int get_id_y() {
 }
 constexpr int start_y = 240;
 constexpr int deltaY = 80;
-struct ButtonFullscreen : public TextRect {
+struct ButtonFullscreen final : TextRect {
     void load_text() {
         if (GameOptions::Fullscreen) {
             change_text(text_format("Fullscreen", "ON"));
@@ -27,17 +27,16 @@ struct ButtonFullscreen : public TextRect {
         }
 
     }
-    ButtonFullscreen(SDL_Renderer* renderer) : TextRect(renderer, "-", 0, 0,
+    explicit ButtonFullscreen(SDL_Renderer* renderer) : TextRect(renderer, "-", 0, 0,
         SDL_TEXT_COLOR_WHITE, 50, "assets/fonts/Haiyanzhishidongdong-Regular-2.ttf")
     {
         id = 0;
         load_text();
-        x = 1920 / 2 - rect_w / 2;
+        x = 1920.0 / 2 - rect_w / 2;
         y = start_y + deltaY * get_id_y();
         SDL_SetTextureAlphaMod(texture, 128);
     }
     void switch_param() {
-        const char* text;
         GameOptions::Fullscreen = !GameOptions::Fullscreen;
         load_text();
     }
@@ -51,13 +50,12 @@ struct ButtonFullscreen : public TextRect {
             case SDL_EVENT_KEY_DOWN:
                 switch (event->key.scancode) {
                     case SDL_SCANCODE_LEFT:
-                        switch_param();
-                        break;
                     case SDL_SCANCODE_RIGHT:
                         switch_param();
                         break;
+                    default: ;
                 }
-
+            default: ;
         }
     }
     void on_mouse_enter() override {
@@ -68,34 +66,32 @@ struct ButtonFullscreen : public TextRect {
     }
 };
 
-void change_volume(int& num, char mod) {
-    if (mod == '+')
-        num += 10;
-    else {
-        num -= 10;
-    }
-    if (num > 100)
-        num = 100;
+
+static void change_volume(int& num, const int mod, int mx = 100) {
+    num += mod;
+
+    if (num > mx)
+        num = mx;
     else if (num < 0)
         num = 0;
 }
 
 
 #define MyOptionVar GameOptions::Main_Volume
-struct ButtonMainVolume : public TextRect {
+struct ButtonMainVolume final : public TextRect {
     void load_text() {
         change_text(text_format("Main Volume", std::format("{}%", MyOptionVar).c_str()));
     }
-    ButtonMainVolume(SDL_Renderer* renderer) : TextRect(renderer, "-", 0, 0,
+    explicit ButtonMainVolume(SDL_Renderer* renderer) : TextRect(renderer, "-", 0, 0,
         SDL_TEXT_COLOR_WHITE, 50, "assets/fonts/Haiyanzhishidongdong-Regular-2.ttf")
     {
         load_text();
-        x = 1920 / 2 - rect_w / 2;
+        x = 1920.0 / 2 - rect_w / 2;
         y = start_y + deltaY * get_id_y();
         SDL_SetTextureAlphaMod(texture, 128);
     }
     void on_mouse_clicked() override {
-        change_volume(MyOptionVar, '+');
+        change_volume(MyOptionVar, 10);
 
         load_text();
     }
@@ -104,16 +100,17 @@ struct ButtonMainVolume : public TextRect {
         switch (event->type) {
             case SDL_EVENT_KEY_DOWN:
                 switch (event->key.scancode) {
-                case SDL_SCANCODE_LEFT:
-                        change_volume(MyOptionVar, '-');
-                        load_text();
-                        break;
-                case SDL_SCANCODE_RIGHT:
-                        change_volume(MyOptionVar, '+');
-                        load_text();
-                        break;
+                    case SDL_SCANCODE_LEFT:
+                            change_volume(MyOptionVar, -10);
+                            load_text();
+                            break;
+                    case SDL_SCANCODE_RIGHT:
+                            change_volume(MyOptionVar, 10);
+                            load_text();
+                            break;
+                    default: ;
                 }
-
+            default: ;
         }
     }
 
@@ -128,11 +125,11 @@ struct ButtonMainVolume : public TextRect {
 
 
 #define MyOptionVar GameOptions::BGM_Volume
-struct ButtonBGMVolume : public TextRect {
+struct ButtonBGMVolume final : public TextRect {
     void load_text() {
         change_text(text_format("BGM Volume", std::format("{}%", MyOptionVar).c_str()));
     }
-    ButtonBGMVolume(SDL_Renderer* renderer) : TextRect(renderer, "-", 0, 0,
+    explicit ButtonBGMVolume(SDL_Renderer* renderer) : TextRect(renderer, "-", 0, 0,
         SDL_TEXT_COLOR_WHITE, 50, "assets/fonts/Haiyanzhishidongdong-Regular-2.ttf")
     {
         load_text();
@@ -141,7 +138,7 @@ struct ButtonBGMVolume : public TextRect {
         SDL_SetTextureAlphaMod(texture, 128);
     }
     void on_mouse_clicked() override {
-        change_volume(MyOptionVar, '+');
+        change_volume(MyOptionVar, 10);
 
         load_text();
     }
@@ -150,16 +147,17 @@ struct ButtonBGMVolume : public TextRect {
         switch (event->type) {
             case SDL_EVENT_KEY_DOWN:
                 switch (event->key.scancode) {
-                case SDL_SCANCODE_LEFT:
-                        change_volume(MyOptionVar, '-');
-                        load_text();
-                        break;
-                case SDL_SCANCODE_RIGHT:
-                        change_volume(MyOptionVar, '+');
-                        load_text();
-                        break;
+                    case SDL_SCANCODE_LEFT:
+                            change_volume(MyOptionVar, -10);
+                            load_text();
+                            break;
+                    case SDL_SCANCODE_RIGHT:
+                            change_volume(MyOptionVar, 10);
+                            load_text();
+                            break;
+                    default: ;
                 }
-
+            default: ;
         }
     }
 
@@ -174,11 +172,11 @@ struct ButtonBGMVolume : public TextRect {
 
 
 #define MyOptionVar GameOptions::BGS_Volume
-struct ButtonBGSVolume : public TextRect {
+struct ButtonBGSVolume final : public TextRect {
     void load_text() {
         change_text(text_format("BGS Volume", std::format("{}%", MyOptionVar).c_str()));
     }
-    ButtonBGSVolume(SDL_Renderer* renderer) : TextRect(renderer, "-", 0, 0,
+    explicit ButtonBGSVolume(SDL_Renderer* renderer) : TextRect(renderer, "-", 0, 0,
         SDL_TEXT_COLOR_WHITE, 50, "assets/fonts/Haiyanzhishidongdong-Regular-2.ttf")
     {
         load_text();
@@ -187,7 +185,7 @@ struct ButtonBGSVolume : public TextRect {
         SDL_SetTextureAlphaMod(texture, 128);
     }
     void on_mouse_clicked() override {
-        change_volume(MyOptionVar, '+');
+        change_volume(MyOptionVar, 10);
 
         load_text();
     }
@@ -196,16 +194,17 @@ struct ButtonBGSVolume : public TextRect {
         switch (event->type) {
             case SDL_EVENT_KEY_DOWN:
                 switch (event->key.scancode) {
-                case SDL_SCANCODE_LEFT:
-                        change_volume(MyOptionVar, '-');
-                        load_text();
-                        break;
-                case SDL_SCANCODE_RIGHT:
-                        change_volume(MyOptionVar, '+');
-                        load_text();
-                        break;
+                    case SDL_SCANCODE_LEFT:
+                            change_volume(MyOptionVar, -10);
+                            load_text();
+                            break;
+                    case SDL_SCANCODE_RIGHT:
+                            change_volume(MyOptionVar, 10);
+                            load_text();
+                            break;
+                    default: ;
                 }
-
+            default: ;
         }
     }
 
@@ -220,11 +219,11 @@ struct ButtonBGSVolume : public TextRect {
 
 
 #define MyOptionVar GameOptions::SE_Volume
-struct ButtonSEVolume : public TextRect {
+struct ButtonSEVolume final : public TextRect {
     void load_text() {
         change_text(text_format("SE Volume", std::format("{}%", MyOptionVar).c_str()));
     }
-    ButtonSEVolume(SDL_Renderer* renderer) : TextRect(renderer, "-", 0, 0,
+    explicit ButtonSEVolume(SDL_Renderer* renderer) : TextRect(renderer, "-", 0, 0,
         SDL_TEXT_COLOR_WHITE, 50, "assets/fonts/Haiyanzhishidongdong-Regular-2.ttf")
     {
         load_text();
@@ -233,7 +232,7 @@ struct ButtonSEVolume : public TextRect {
         SDL_SetTextureAlphaMod(texture, 128);
     }
     void on_mouse_clicked() override {
-        change_volume(MyOptionVar, '+');
+        change_volume(MyOptionVar, 10);
 
         load_text();
     }
@@ -243,15 +242,16 @@ struct ButtonSEVolume : public TextRect {
             case SDL_EVENT_KEY_DOWN:
                 switch (event->key.scancode) {
                 case SDL_SCANCODE_LEFT:
-                        change_volume(MyOptionVar, '-');
+                        change_volume(MyOptionVar, -10);
                         load_text();
                         break;
                 case SDL_SCANCODE_RIGHT:
-                        change_volume(MyOptionVar, '+');
+                        change_volume(MyOptionVar, 10);
                         load_text();
                         break;
+                    default: ;
                 }
-
+            default: ;
         }
     }
 
@@ -266,11 +266,11 @@ struct ButtonSEVolume : public TextRect {
 
 
 #define MyOptionVar GameOptions::Sister_Volume
-struct ButtonSisterVolume : public TextRect {
+struct ButtonSisterVolume final : public TextRect {
     void load_text() {
         change_text(text_format("Sister Volume", std::format("{}%", MyOptionVar).c_str()));
     }
-    ButtonSisterVolume(SDL_Renderer* renderer) : TextRect(renderer, "-", 0, 0,
+    explicit ButtonSisterVolume(SDL_Renderer* renderer) : TextRect(renderer, "-", 0, 0,
         SDL_TEXT_COLOR_WHITE, 50, "assets/fonts/Haiyanzhishidongdong-Regular-2.ttf")
     {
         load_text();
@@ -279,7 +279,7 @@ struct ButtonSisterVolume : public TextRect {
         SDL_SetTextureAlphaMod(texture, 128);
     }
     void on_mouse_clicked() override {
-        change_volume(MyOptionVar, '+');
+        change_volume(MyOptionVar, 10);
 
         load_text();
     }
@@ -288,16 +288,17 @@ struct ButtonSisterVolume : public TextRect {
         switch (event->type) {
             case SDL_EVENT_KEY_DOWN:
                 switch (event->key.scancode) {
-                case SDL_SCANCODE_LEFT:
-                        change_volume(MyOptionVar, '-');
-                        load_text();
-                        break;
-                case SDL_SCANCODE_RIGHT:
-                        change_volume(MyOptionVar, '+');
-                        load_text();
-                        break;
+                    case SDL_SCANCODE_LEFT:
+                            change_volume(MyOptionVar, -10);
+                            load_text();
+                            break;
+                    case SDL_SCANCODE_RIGHT:
+                            change_volume(MyOptionVar, 10);
+                            load_text();
+                            break;
+                    default: ;
                 }
-
+            default: ;
         }
     }
 
@@ -312,11 +313,11 @@ struct ButtonSisterVolume : public TextRect {
 
 
 #define MyOptionVar GameOptions::Max_Player_Msgs
-struct ButtonMaxPlayerMsgs : public TextRect {
+struct ButtonMaxPlayerMsgs final : public TextRect {
     void load_text() {
         change_text(text_format("MaxPlayerMessages", std::format("{}", MyOptionVar).c_str()));
     }
-    ButtonMaxPlayerMsgs(SDL_Renderer* renderer) : TextRect(renderer, "-", 0, 0,
+    explicit ButtonMaxPlayerMsgs(SDL_Renderer* renderer) : TextRect(renderer, "-", 0, 0,
         SDL_TEXT_COLOR_WHITE, 50, "assets/fonts/Haiyanzhishidongdong-Regular-2.ttf")
     {
         load_text();
@@ -325,7 +326,7 @@ struct ButtonMaxPlayerMsgs : public TextRect {
         SDL_SetTextureAlphaMod(texture, 128);
     }
     void on_mouse_clicked() override {
-        change_volume(MyOptionVar, '+');
+        change_volume(MyOptionVar, 10);
 
         load_text();
     }
@@ -334,16 +335,17 @@ struct ButtonMaxPlayerMsgs : public TextRect {
         switch (event->type) {
             case SDL_EVENT_KEY_DOWN:
                 switch (event->key.scancode) {
-                case SDL_SCANCODE_LEFT:
-                        change_volume(MyOptionVar, '-');
-                        load_text();
-                        break;
-                case SDL_SCANCODE_RIGHT:
-                        change_volume(MyOptionVar, '+');
-                        load_text();
-                        break;
+                    case SDL_SCANCODE_LEFT:
+                            change_volume(MyOptionVar, -1);
+                            load_text();
+                            break;
+                    case SDL_SCANCODE_RIGHT:
+                            change_volume(MyOptionVar, 1);
+                            load_text();
+                            break;
+                    default: ;
                 }
-
+            default: ;
         }
     }
 
@@ -357,14 +359,14 @@ struct ButtonMaxPlayerMsgs : public TextRect {
 #undef MyOptionVar
 
 
-struct ButtonShwWpnDr : public TextRect {
+struct ButtonShwWpnDr final : public TextRect {
     void load_text() {
         if (GameOptions::Show_Weapon_Durability)
             change_text(text_format("Show Weapon Durability", "ON"));
         else
             change_text(text_format("Show Weapon Durability", "OFF"));
     }
-    ButtonShwWpnDr(SDL_Renderer* renderer) : TextRect(renderer, "-", 0, 0,
+    explicit ButtonShwWpnDr(SDL_Renderer* renderer) : TextRect(renderer, "-", 0, 0,
         SDL_TEXT_COLOR_WHITE, 50, "assets/fonts/Haiyanzhishidongdong-Regular-2.ttf")
     {
         load_text();
@@ -373,7 +375,6 @@ struct ButtonShwWpnDr : public TextRect {
         SDL_SetTextureAlphaMod(texture, 128);
     }
     void switch_param() {
-        const char* text;
         GameOptions::Show_Weapon_Durability = !GameOptions::Show_Weapon_Durability;
         load_text();
     }
@@ -386,14 +387,13 @@ struct ButtonShwWpnDr : public TextRect {
         switch (event->type) {
             case SDL_EVENT_KEY_DOWN:
                 switch (event->key.scancode) {
-                case SDL_SCANCODE_LEFT:
-                        switch_param();
-                        break;
-                case SDL_SCANCODE_RIGHT:
-                        switch_param();
-                        break;
+                    case SDL_SCANCODE_LEFT:
+                    case SDL_SCANCODE_RIGHT:
+                            switch_param();
+                            break;
+                        default: ;
                 }
-
+            default: ;
         }
     }
     void on_mouse_enter() override {

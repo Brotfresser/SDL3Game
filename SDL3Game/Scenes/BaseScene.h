@@ -1,7 +1,7 @@
 #pragma once
 #include <SDL3/SDL.h>
 #include <list>
-#include "../BaseSprite.h"
+#include "../Sprites/BaseSprite.h"
 #include "UIMenuButtons.h"
 
 

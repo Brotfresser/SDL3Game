@@ -1,7 +1,7 @@
 #include "save_and_load.h"
 
 #include "global_options.h"
-#include <iostream>
+#include <SDL3/SDL.h>
 #include <fstream>
 #include <nlohmann/json.hpp>
 
@@ -12,11 +12,11 @@ void load_options() {
 
     if (!out_options.is_open()) {
         out_options.close();
-    	std::cout << "Could not open options.json" << std::endl;
+    	SDL_Log("Could not open options.json");
         save_options();
         return;
     }
-	std::cout << "opening options.json for loading" << std::endl;
+	SDL_Log("opening options.json for loading");
 	nlohmann::json load_json;
 	try { // sometimes it skip (!out_options) for some reason
     out_options >> load_json;
@@ -33,9 +33,9 @@ void load_options() {
 		// load option vars here end
 	}
 	catch (const nlohmann::json_abi_v3_12_0::detail::parse_error &e) {
-		std::cout << "|Parsing error| " << e.what() << std::endl;
-		std::cout << "position: " << e.byte << std::endl;
-		std::cout << "BLABLABLA, seems like program can't find options.json or you're version of options.json is corrupted" << std::endl;
+		SDL_LogWarn(SDL_LOG_PRIORITY_ERROR , "|Parsing error| %s", e.what());
+		SDL_LogWarn(SDL_LOG_PRIORITY_ERROR , "position: %s", e.byte);
+		SDL_LogWarn(SDL_LOG_PRIORITY_ERROR , "BLABLABLA, seems like program can't find options.json or you're version of options.json is corrupted");
 	}
 	load_json.clear();
 }
@@ -47,11 +47,11 @@ void load_game_file(const char* path_to_file) {
 
 	if (!out_file.is_open()) {
 		out_file.close();
-		std::cout << "Could not open " << path_to_file << std::endl;
+		SDL_Log("Could not open %s", path_to_file);
 		save_game_file(path_to_file);
 		return;
 	}
-	std::cout << "opening " << path_to_file << " for loading" << std::endl;
+	SDL_Log("opening %s for loading", path_to_file);
 	nlohmann::json load_json;
 	try { // sometimes it skip (!out_options) for some reason
 		out_file >> load_json;
@@ -60,9 +60,9 @@ void load_game_file(const char* path_to_file) {
 		//load game vars here end
 	}
 	catch (const nlohmann::json_abi_v3_12_0::detail::parse_error &e) {
-		std::cout << "|Parsing error| " << e.what() << std::endl;
-		std::cout << "position: " << e.byte << std::endl;
-		std::cout << "BLABLABLA, seems like program can't find options.json or you're version of options.json is corrupted" << std::endl;
+		SDL_LogWarn(SDL_LOG_PRIORITY_ERROR , "|Parsing error| %s", e.what());
+		SDL_LogWarn(SDL_LOG_PRIORITY_ERROR , "position: %s", e.byte);
+		SDL_LogWarn(SDL_LOG_PRIORITY_ERROR , "BLABLABLA, seems like program can't find save/options.json or it's corrupted, try delete it");
 	}
 	load_json.clear();
 }
@@ -71,7 +71,7 @@ void load_game_file(const char* path_to_file) {
 void save_options() {
 	std::filesystem::create_directory("save");
 	nlohmann::json save_json;
-	std::cout << "saving options.json" << std::endl;
+	SDL_Log("saving options.json");
 // save option vars here begin
 	save_json["Fullscreen"] = GameOptions::Fullscreen;
 	save_json["Main_Volume"] = GameOptions::Main_Volume;
@@ -92,7 +92,7 @@ void save_options() {
 void save_game_file(const char* path_to_file) {
 	std::filesystem::create_directory("save");
 	nlohmann::json save_json;
-	std::cout << "saving " << path_to_file << std::endl;
+	SDL_Log("saving %s", path_to_file);
 	//save game vars here begin
 	//save game vars here end
 	std::ofstream out(path_to_file);

@@ -1,59 +1,52 @@
 #pragma once
 #include "../BaseScene.h"
 #include "../../global_variables.h"
-#include "../../global_functions.h"
-#include "../SceneMainMenu.h"
 #include "SceneOptions/UIbuttons.cpp"
-#include "../../TextRect.h"
 
 
-//Sprite* bg;
-struct SceneOptions: public BaseScene
+struct SceneOptions final : public BaseScene
 {
-    UIMenuButtons current_button;
-    SceneOptions(SDL_Renderer* renderer) : BaseScene(renderer)
+    UIMenuButtons menu_buttons;
+    explicit SceneOptions(SDL_Renderer* renderer) : BaseScene(renderer)
     {
-        current_button.init();
+        menu_buttons.init();
         all_sprites.push_back(new Sprite(renderer, "assets/homeVN/kitchen/bg/dk_CW_N_RL.png"));
-        current_button.all_buttons->push_back(new ButtonFullscreen(renderer));
-        current_button.all_buttons->push_back(new ButtonMainVolume(renderer));
-        current_button.all_buttons->push_back(new ButtonBGMVolume(renderer));
-        current_button.all_buttons->push_back(new ButtonBGSVolume(renderer));
-        current_button.all_buttons->push_back(new ButtonSEVolume(renderer));
-        current_button.all_buttons->push_back(new ButtonSisterVolume(renderer));
-        current_button.all_buttons->push_back(new ButtonMaxPlayerMsgs(renderer));
-        current_button.all_buttons->push_back(new ButtonShwWpnDr(renderer));
-        current_button.current = current_button.all_buttons->begin();
-        (*current_button)->on_mouse_enter();
+        menu_buttons.all_buttons->push_back(new ButtonFullscreen(renderer));
+        menu_buttons.all_buttons->push_back(new ButtonMainVolume(renderer));
+        menu_buttons.all_buttons->push_back(new ButtonBGMVolume(renderer));
+        menu_buttons.all_buttons->push_back(new ButtonBGSVolume(renderer));
+        menu_buttons.all_buttons->push_back(new ButtonSEVolume(renderer));
+        menu_buttons.all_buttons->push_back(new ButtonSisterVolume(renderer));
+        menu_buttons.all_buttons->push_back(new ButtonMaxPlayerMsgs(renderer));
+        menu_buttons.all_buttons->push_back(new ButtonShwWpnDr(renderer));
+        menu_buttons.current = menu_buttons.all_buttons->begin();
+        (*menu_buttons)->on_mouse_enter();
     }
 
     EventType event(SDL_Event* event) override {
         switch (event->type) {
             case SDL_EVENT_MOUSE_MOTION:
-                UIMENUBUTTONMOUSEMOTION(current_button)
+                UI_MENU_BUTTON_MOUSE_MOTION_ITER(menu_buttons)
             case SDL_EVENT_MOUSE_BUTTON_UP:
-                switch (event->button.button) {
-                    case SDL_BUTTON_RIGHT:
-                        Global::changeScene(new SceneMainMenu(renderer));
-                        break;
-                }
+                UI_MENU_BUTTON_MOUSE_PRESSED(menu_buttons, *menu_buttons.all_buttons)
+                if (event->button.button == SDL_BUTTON_RIGHT)
+                        SceneFabric::SwitchScene(AllScenesID::MainMenu);
+
             case SDL_EVENT_KEY_DOWN:
                 switch (event->key.scancode) {
-                    case SDL_SCANCODE_ESCAPE:
-
-                        break;
-                    UIMENUBUTTONSSWTICH(current_button)
+                UI_MENU_BUTTON_SWITCH_ITER(menu_buttons)
+                default: ;
                 }
                 break;
         }
-        (*current_button.current)->handleEvents(event);
+        (*menu_buttons.current)->handleEvents(event);
         return Global::event;
     }
 
     EventType draw() override {
         for (auto& sprite : all_sprites)
             sprite->draw();
-        for (auto& button : *current_button.all_buttons)
+        for (auto& button : *menu_buttons.all_buttons)
             button->draw();
         return EventType::NONE;
     }
@@ -63,7 +56,7 @@ struct SceneOptions: public BaseScene
     }
 
     ~SceneOptions() {
-        for (auto& sprite : *current_button.all_buttons)
+        for (auto& sprite : *menu_buttons.all_buttons)
             delete sprite;
     }
 };

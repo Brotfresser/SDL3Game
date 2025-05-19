@@ -22,10 +22,10 @@ public:
         return Global::event;
     }
     EventType draw() override {
-
+        return EventType::NONE;
     }
     EventType update() override {
-
+        return Global::event;
     }
     ~SceneExample() override {
 

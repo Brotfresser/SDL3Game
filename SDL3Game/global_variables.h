@@ -1,5 +1,7 @@
 #pragma once
-#include "Player.h"
+#include <Sprites/Player.h>
+#include <Scenes/BaseScene.h>
+#include <memory>
 
 #ifdef __MAIN_GLOBAL_DEFINITION__
 #define GLOBAL(type, name, value) type name = value
@@ -10,12 +12,13 @@
 
 namespace Global {
 	GLOBAL(SDL_Window*, window, nullptr);
+	GLOBAL(SDL_Renderer*, renderer, nullptr);
 	GLOBAL(float, MouseX, 0);
 	GLOBAL(float, MouseY, 0);
 
 	GLOBAL(EventType, event, EventType::NONE);
 	// указатель на новую сцену, на которую игра сменится в main.cpp
-	GLOBAL(BaseScene*, new_scene_ptr, nullptr);
+	GLOBAL(std::unique_ptr<BaseScene>, new_scene_ptr, nullptr);
 	GLOBAL(Player*, player, nullptr);
 
 }

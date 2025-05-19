@@ -1,21 +1,19 @@
 #include "Timer.h"
-#include <SDL3/SDL.h>
 
-Timer::Timer() {
 
-}
+Timer::Timer() = default;
 
-Timer::Timer(double wait_time) {
+Timer::Timer(const double wait_time) {
 	(*this)(wait_time);
 }
 
 
-void Timer::operator () (double time_seconds) {
-	this->first_time = double(SDL_GetTicks()) / 1000;
-	this->wait_time = time_seconds;  // - 0.001 ?;
+void Timer::operator () (const double time_seconds) {
+	this->first_time = static_cast<double>(SDL_GetTicksNS()) / 1'000'000'000;
+	this->wait_time = time_seconds;
 }
 
 
-Timer::operator bool () {
-	return (first_time + wait_time) < double(SDL_GetTicks()) / 1000;
+Timer::operator bool () const {
+	return (first_time + wait_time) < static_cast<double>(SDL_GetTicksNS()) / 1'000'000'000;
 }
