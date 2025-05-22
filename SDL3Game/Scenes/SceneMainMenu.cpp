@@ -1,6 +1,9 @@
 #include "SceneMainMenu/UIbuttons.cpp"
 #include <global_variables.h>
-#include <Sprites/TextRect.h>
+#include <Sprites/TextClass/TextRect.h>
+
+#include "Sprites/TextClass/TextEffectTeletype.h"
+#include "Sprites/TextClass/TextRectWithShadow.h"
 static UIMenuButtons current_button;
 
 static float a, b;
@@ -22,6 +25,10 @@ struct SceneMainMenu final : BaseScene {
 
 		current_button.init(std::ranges::find(all_sprites, new_button_ptr), all_sprites.end());
 		(*current_button)->on_mouse_enter();
+
+		auto text = new TextEffectTeletype(new TextRectWithShadow(renderer, "Big rEal TEXT", 200, 200, SDL_TEXT_COLOR_WHITE, 50));
+		text->effect_on();
+		all_sprites.push_back(text);
 		SDL_Log("\tWelcome to SceneMainMenu");
 	}
 

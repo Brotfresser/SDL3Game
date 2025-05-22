@@ -1,0 +1,10 @@
+{
+  "Cutscene_StartNew": [
+    {"delay": 0.2, "clear": true, "continue": false, "has_Ultra": false,
+      "text": "In a dimly lit room"
+    },
+    {"text": "	Man
+Cough, Cough, Cough..."},
+    {"text": "A nan lies in bed, \nthe threadbare fabric draped over his body which trembles slightly, \nwith each labored breath of his illness."}
+  ]
+}

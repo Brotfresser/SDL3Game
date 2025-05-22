@@ -1,6 +1,7 @@
 #pragma once
 #include <SDL3/SDL.h>
 #include "SpriteSmoothMove.h"
+#include "BaseSpriteInterface.h"
 
 enum EventType {
     NONE,
@@ -8,40 +9,44 @@ enum EventType {
     GAME_CLOSE
 };
 
-class BaseSprite
+class BaseSprite : public BaseSpriteInterface
 {
 protected:
     SDL_Renderer* renderer;
     SDL_Texture* texture;
     const char* path_to_file;
     SDL_FRect dstrect;
-    SDL_FRect srcrect;
+    // размеры спрайта в файле
     float rect_w, rect_h;
 
     BaseSprite(SDL_Renderer* renderer, const char* file, float x = 0, float y = 0);
 public:
     SpriteSmoothMove smooth_move_data;
     float& x, & y;
-    // ??????????, ?????????? ?????????
+    const float& w, h;
+    // чтение из файла
+    SDL_FRect srcrect;
+    // множитель, раст€гивает спрайт
     float rect_w_k = 1, rect_h_k = 1;
     bool is_active = true;
         
     virtual ~BaseSprite();
-    virtual void load_texture(float w = 0, float h = 0) = 0;
-    virtual void load_texture(const char* path_to_file, float w = 0, float h = 0);
-    virtual void load_texture(SDL_Texture* new_texture);
-    virtual void draw();
-    virtual void update();
-    virtual void handleEvents(SDL_Event* event);
-    virtual void on_mouse_clicked();
-    virtual void on_mouse_enter();
-    virtual void on_mouse_exit();
-    virtual bool is_in_rect(float x, float y);
+    void load_texture(float w = 0, float h = 0) = 0;
+    void load_texture(const char* path_to_file, float w = 0, float h = 0) override;
+    void draw() override;
+    void update() override;
+    void handleEvents(SDL_Event* event) override;
+    void on_mouse_clicked() override;
+    void on_mouse_enter() override;
+    void on_mouse_exit() override;
+    bool is_in_rect(float x, float y) const override;
     virtual bool is_collided_with_sprite(const BaseSprite& obj);
-    void activate();
-    void deactivate();
+    void activate() override;
+    void deactivate() override;
 
-    const char* get_path_to_file();
-    SDL_Texture* get_texture();
+    const char* get_path_to_file() const override;
+    SDL_Texture* get_texture() const override;
+    float get_rect_w_original() const override;
+    float get_rect_h_original() const override;
 };
 

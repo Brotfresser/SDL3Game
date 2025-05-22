@@ -5,6 +5,7 @@
 BaseSprite::BaseSprite(SDL_Renderer* renderer, const char* file, const float x, const float y) :
     dstrect(), srcrect(),
     x(dstrect.x), y(dstrect.y),
+    w(dstrect.w), h(dstrect.h),
     smooth_move_data(dstrect.x, dstrect.y)
 {
     //SDL_Log("init BaseSprite x: %10.1f, y: %10.1f   | %s", x, y, file);
@@ -25,11 +26,6 @@ void BaseSprite::load_texture(const char* path_to_file, float w, float h) {
     load_texture(w, h);
 }
 
-void BaseSprite::load_texture(SDL_Texture* new_texture) {
-    SDL_DestroyTexture(texture);
-    texture = new_texture;
-    SDL_GetTextureSize(texture, &rect_w, &rect_h);
-}
 
 void BaseSprite::draw() {
     dstrect.w = rect_w * rect_w_k;
@@ -60,7 +56,7 @@ void BaseSprite::on_mouse_exit() {
 }
 
 
-bool BaseSprite::is_in_rect(float x, float y) {
+bool BaseSprite::is_in_rect(float x, float y) const {
     if (this->x <= x && x <= this->x + rect_w)
         if (this->y <= y && y <= this->y + rect_h)
             return is_active && true;
@@ -72,27 +68,31 @@ bool BaseSprite::is_collided_with_sprite(const BaseSprite& obj) {
     if (!is_active)
         return false;
 
-    bool is_x_same = false;
-    for (int x = obj.x; x < obj.x + obj.rect_w; ++x)
-        if (this->x <= x && x <= this->x + this->rect_w) {
-            is_x_same = true;
-            break;
-        }
-    for (int y = obj.y; y < obj.y + obj.rect_h; ++y)
-        if (this->y <= y && y <= this->y + this->rect_h) {
-            return is_x_same;
-        }
+    float obj_right = obj.x + obj.w;
+    float obj_bottom = obj.y + obj.h;
+    float obj_left = obj.x;
+    float obj_top = obj.y;
 
-    return false;
+    return (obj_right > x && obj_left < x + w && obj_bottom > y && obj_top > y + h);
         
 }
 void BaseSprite::activate() { is_active = true; }
 void BaseSprite::deactivate() { is_active = false; }
 
-const char *BaseSprite::get_path_to_file() {
+
+const char *BaseSprite::get_path_to_file() const {
     return path_to_file;
 }
 
-SDL_Texture* BaseSprite::get_texture() {
+SDL_Texture* BaseSprite::get_texture() const {
     return texture;
+}
+
+float BaseSprite::get_rect_w_original() const {
+    return rect_w;
+}
+
+
+float BaseSprite::get_rect_h_original() const {
+    return rect_h;
 }

@@ -11,6 +11,13 @@ EventType BaseScene::draw() {
 	return EventType::NONE;
 }
 
+EventType BaseScene::update() {
+	for (auto& sprite : all_sprites)
+		sprite->update();
+	return EventType::NONE;
+}
+
+
 BaseScene::~BaseScene() {
 	for (auto& sprite : all_sprites)
 		delete sprite;

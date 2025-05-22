@@ -1,0 +1,21 @@
+#pragma once
+
+#define VERSION_MAJOR 0
+#define VERSION_MINOR 1
+#define VERSION_PATCH 0
+#define VERSION_BUILD 0
+
+#define STRINGIFY(x) #x
+#define TO_STRING(x) STRINGIFY(x)
+
+#define FILE_VERSION_STR TO_STRING(VERSION_MAJOR) "." TO_STRING(VERSION_MINOR) "." TO_STRING(VERSION_PATCH) "." TO_STRING(VERSION_BUILD)
+#define PRODUCT_VERSION_STR TO_STRING(VERSION_MAJOR) "." TO_STRING(VERSION_MINOR) "." TO_STRING(VERSION_PATCH)
+
+#ifdef WIN32
+#define COMPANY_NAME "Brotfresser inc."
+#define FILE_DESCRIPTION "https://github.com/Brotfresser"
+#define INTERNAL_NAME "BreadEngine"
+#define LEGAL_COPYRIGHT "MIT License © 2024"
+#define ORIGINAL_FILENAME "BreadEngine.exe"
+#define PRODUCT_NAME "BreadEngine"
+#endif

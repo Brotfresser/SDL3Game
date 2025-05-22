@@ -19,7 +19,7 @@ public:
 	BaseScene(SDL_Renderer* renderer);
 	virtual EventType event(SDL_Event* event) = 0;
 	virtual EventType draw();
-	virtual EventType update() = 0;
+	virtual EventType update();
 	// автоматически delete all_sprites
 	virtual ~BaseScene();
 };

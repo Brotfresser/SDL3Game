@@ -1,16 +1,18 @@
 #include "../global_variables.h"
 #include <SwitchSceneFabric.h>
 
+#include "Sprites/SpriteWithAnimation.h"
+#include "Sprites/AnimationClass/AnimationByFile.h"
 
-struct SceneGameStart final : BaseScene {
+
+struct SceneGameStart : BaseScene {
 	explicit SceneGameStart(SDL_Renderer* renderer)
 		: BaseScene(renderer)
 	{
-		Global::player = new Player(renderer, "assets/hero/hero.png", 32, 32);
-		Global::player->rect_w_k = 10;
-		Global::player->rect_h_k = 10;
-		all_sprites.push_back(Global::player);
-
+		all_sprites.push_back(new Sprite(renderer, "assets/homeVN/sis_room/bg/sister_room_BW.png"));
+		auto anim = new SpriteWithAnimation(renderer, "assets/animations/pipofm-fullscreeneffect_023/pipofm-fullscreeneffect_023_1.png");
+		anim->change_animation(new AnimationByFile(anim, "assets/animations/pipofm-fullscreeneffect_023/pipofm-fullscreeneffect_023_", new int[1]{31}, 0.1));
+		all_sprites.push_back(anim);
 		SDL_Log("Welcome to SceneGameStart");
 	}
 
@@ -19,24 +21,10 @@ struct SceneGameStart final : BaseScene {
 		{
 			case SDL_SCANCODE_ESCAPE:
 				SceneFabric::SwitchScene(0);
+				break;
 			default:
 				break;
 		}
 		return Global::event;
-	}
-
-	EventType draw() override {
-		for (auto& sprite : all_sprites)
-			sprite->draw();
-		return EventType::NONE;
-	}
-
-
-	EventType update() override {
-		for (auto& sprite : all_sprites)
-			sprite->update();
-		/*Global::player->rect_w *= 1.001;
-		Global::player->rect_h *= 1.001;*/
-		return EventType::NONE;
 	}
 };

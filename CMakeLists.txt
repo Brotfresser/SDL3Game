@@ -41,16 +41,44 @@ set_target_properties(SDL3_ttf PROPERTIES
 link_libraries(SDL3_ttf)
 
 
+if (WIN32)
+    find_program(WINDRES windres)
+    if (WINDRES)
+        # compile .rc file into .o
+        add_custom_command(
+                OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/resources.o
+                COMMAND ${WINDRES} ${CMAKE_CURRENT_SOURCE_DIR}/resources.rc -o ${CMAKE_CURRENT_BINARY_DIR}/resources.o
+                DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/resources.rc ${CMAKE_CURRENT_SOURCE_DIR}/version.h
+        )
+    else ()
+        message("don't find windres on windows")
+    endif ()
+endif ()
+
 
 file(GLOB SOURCES "SDL3Game/*.cpp")
 file(GLOB SCENE_SOURCES "SDL3Game/Scenes/*.cpp")
 file(GLOB SPRITE_SOURCES "SDL3Game/Sprites/*.cpp")
-if(CMAKE_BUILD_TYPE STREQUAL "Debug")
-    add_executable(BreadEngine SDL3Game/main.cpp ${SOURCES} ${SCENE_SOURCES} ${SPRITE_SOURCES})
+file(GLOB ANIMATION_SOURCES "SDL3Game/Sprites/AnimationClass/*.cpp")
+file(GLOB TEXT_SOURCES "SDL3Game/Sprites/TextClass/*.cpp")
+if (WIN32)
+    add_executable(BreadEngine SDL3Game/main.cpp
+            ${SOURCES} ${SCENE_SOURCES}
+            ${SPRITE_SOURCES}
+            ${ANIMATION_SOURCES}
+            ${TEXT_SOURCES}
+            ${CMAKE_CURRENT_BINARY_DIR}/resources.o
+    )
+    set_target_properties(BreadEngine PROPERTIES WIN32_EXECUTABLE $<CONFIG:Release>)
+else ()
+    add_executable(BreadEngine SDL3Game/main.cpp
+            ${SOURCES} ${SCENE_SOURCES}
+            ${SPRITE_SOURCES}
+            ${ANIMATION_SOURCES}
+            ${TEXT_SOURCES}
+    )
 endif ()
-if(CMAKE_BUILD_TYPE STREQUAL "Release")
-    add_executable(BreadEngine WIN32 SDL3Game/main.cpp ${SOURCES} ${SCENE_SOURCES} ${SPRITE_SOURCES})
-endif ()
+
 include_directories("${CMAKE_SOURCE_DIR}/libs/json")
 include_directories("${CMAKE_SOURCE_DIR}/SDL3Game")
 message("${CMAKE_SOURCE_DIR}/SDL3Game")
@@ -85,3 +113,6 @@ endif ()
 add_custom_command(TARGET BreadEngine PRE_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy_directory
         ${CMAKE_SOURCE_DIR}/SDL3Game/assets $<TARGET_FILE_DIR:BreadEngine>/assets)
+add_custom_command(TARGET BreadEngine PRE_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_directory
+        ${CMAKE_SOURCE_DIR}/SDL3Game/lang $<TARGET_FILE_DIR:BreadEngine>/lang)

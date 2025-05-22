@@ -1,7 +1,7 @@
 #pragma once
 #include <list>
 #include <Sprites/BaseSprite.h>
-using all_sprites_container = std::list<BaseSprite*>;
+using all_sprites_container = std::list<BaseSpriteInterface*>;
 
 
 #define UI_SPRITE_MOUSE_MOTION(current_sprite, sprites_list) for (auto& sprite : sprites_list) \
@@ -51,6 +51,6 @@ struct UIMenuButtons {
     iter operator--();
     iter operator++(int);
     iter operator--(int);
-    BaseSprite* operator*() const;
+    BaseSpriteInterface* operator*() const;
     ~UIMenuButtons();
 };

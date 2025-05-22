@@ -101,7 +101,7 @@ struct UIButtonSupport final : Sprite {
     }
 
     void on_mouse_clicked() override {
-        Global::openWebsite("https://nlch.itch.io/sister");
+        SDL_OpenURL("https://nlch.itch.io/sister");
     }
 };
 

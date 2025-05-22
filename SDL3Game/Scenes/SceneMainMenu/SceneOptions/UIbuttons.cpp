@@ -1,4 +1,4 @@
-#include <Sprites/TextRect.h>
+#include <Sprites/TextClass/TextRect.h>
 #include <format>
 #include <global_options.h>
 
@@ -326,7 +326,7 @@ struct ButtonMaxPlayerMsgs final : public TextRect {
         SDL_SetTextureAlphaMod(texture, 128);
     }
     void on_mouse_clicked() override {
-        change_volume(MyOptionVar, 10);
+        change_volume(MyOptionVar, 1, 10);
 
         load_text();
     }
@@ -336,11 +336,11 @@ struct ButtonMaxPlayerMsgs final : public TextRect {
             case SDL_EVENT_KEY_DOWN:
                 switch (event->key.scancode) {
                     case SDL_SCANCODE_LEFT:
-                            change_volume(MyOptionVar, -1);
+                            change_volume(MyOptionVar, -1, 10);
                             load_text();
                             break;
                     case SDL_SCANCODE_RIGHT:
-                            change_volume(MyOptionVar, 1);
+                            change_volume(MyOptionVar, 1, 10);
                             load_text();
                             break;
                     default: ;

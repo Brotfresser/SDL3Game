@@ -91,7 +91,7 @@ SDL_AppResult handleSceneEvents(EventType event) {
     return SDL_APP_CONTINUE;
 }
 
-float Letterboxing_w, Letterboxing_h;
+int Letterboxing_w, Letterboxing_h;
 SDL_AppResult SDL_AppEvent(void* appstate, SDL_Event* event)
 {
     switch (event->type)

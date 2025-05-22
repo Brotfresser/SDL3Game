@@ -10,7 +10,7 @@ struct SceneOptions final : public BaseScene
     explicit SceneOptions(SDL_Renderer* renderer) : BaseScene(renderer)
     {
         menu_buttons.init();
-        all_sprites.push_back(new Sprite(renderer, "assets/homeVN/kitchen/bg/dk_CW_N_RL.png"));
+        all_sprites.push_back(new Sprite(renderer, "assets/MainMenu/bg/dinner background.png"));
         menu_buttons.all_buttons->push_back(new ButtonFullscreen(renderer));
         menu_buttons.all_buttons->push_back(new ButtonMainVolume(renderer));
         menu_buttons.all_buttons->push_back(new ButtonBGMVolume(renderer));
@@ -34,7 +34,10 @@ struct SceneOptions final : public BaseScene
 
             case SDL_EVENT_KEY_DOWN:
                 switch (event->key.scancode) {
-                UI_MENU_BUTTON_SWITCH_ITER(menu_buttons)
+                    UI_MENU_BUTTON_SWITCH_ITER(menu_buttons)
+                    case SDL_SCANCODE_ESCAPE:
+                        SceneFabric::SwitchScene(AllScenesID::MainMenu);
+                        break;
                 default: ;
                 }
                 break;

@@ -1,18 +1,18 @@
 #include "Player.h"
+#include "AnimationClass/AnimationByAtlas.h"
 
 
 Player::Player(SDL_Renderer* renderer, const char* file, float w, float h, float x, float y)
-    : Sprite(renderer, file, w, h, x, y)
+    : SpriteWithAnimation(renderer, file, w, h, x, y)
 {
     SDL_SetTextureScaleMode(texture, SDL_SCALEMODE_NEAREST);
-    animation = new Animation(rect_w, rect_h, srcrect, 0.2, new int[12] {2,2,2,4,4,4,2,2,2,3,3,3} );
+    animation = new AnimationByAtlas(this, new int[12] {2,2,2,4,4,4,2,2,2,3,3,3}, 0.2);
 }
 
 
 void Player::update() {
     if (!is_active)
         return;
-
     animation->update_frame();
     smooth_move_data.update();
 

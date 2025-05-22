@@ -56,6 +56,6 @@ UIMenuButtons::~UIMenuButtons() {
 
 
 
-BaseSprite* UIMenuButtons::operator*() const {
+BaseSpriteInterface* UIMenuButtons::operator*() const {
     return *current;
 }
